@@ -1,0 +1,94 @@
+{extends "../@layout.latte"}
+
+{block title}{_album} {$album->getName()}{/block}
+
+{block headIncludes}
+    {var $albumCover = $album->getCoverPhoto()}
+    {var $albumCoverUrl = !is_null($albumCover) ? $albumCover->getURLBySizeId('normal') : ''}
+    <meta property="og:title" content="{$album->getName()} — {$instance_name}" />
+    <meta property="og:url" content="{$baseUrl}/album{$album->getPrettyId()}" />
+    <meta n:if="!empty($albumCoverUrl)" property="og:image" content="{$albumCoverUrl}" />
+    <meta property="og:type" content="article" />
+    <meta name="twitter:title" content="{$album->getName()} — {$instance_name}" />
+    <meta n:if="!empty($albumCoverUrl)" name="twitter:image" content="{$albumCoverUrl}" />
+{/block}
+
+{block header}
+    {if !is_null($thisUser) && $album->getOwner()->getId() === $thisUser->getId()} 
+        {* Если альбом принадлежит текущему пользователю *}
+        <a href="/albums{$thisUser->getId()}">{_my_photos}</a> » {$album->getName()} » {$album->getPhotosCount()} {tr("photos", $album->getPhotosCount())}
+    {else}
+        {* Если альбом принадлежит другому пользователю *}
+        <a href="{$album->getOwner()->getURL()}">{$album->getOwner()->getCanonicalName()}</a> » <a href="/albums{$album->getOwner()->getId()}">{_photos}</a> » {$album->getName()} » {$album->getPhotosCount()} {tr("photos", $album->getPhotosCount())}
+    {/if}
+{/block}
+
+{block content}
+
+<!-- <div class="album-info-meta">
+    
+    {* Блок автора альбома *}
+    {var $owner = $album->getOwner()}
+    {if !is_null($owner)}
+        <div class="album-owner-block">
+            <a href="{$owner->getURL()}">
+                <img src="{$owner->getAvatarURL('b')}" alt="{$owner->getCanonicalName()}" style="width: 50px; margin-right: 10px;">
+            </a>
+
+            {var $description = $album->getDescription()}
+    {if !empty($description)}
+        <div class="album-description">
+            <a href="{$owner->getURL()}" style="font-weight: bold; color: #2B587A; font-size: 12px; text-decoration: none;">{$owner->getCanonicalName()}</a>
+            {$description}
+            {var $editTime = $album->getEditTime()}
+            {var $createTime = $album->getCreationTime()}
+
+            {if !is_null($editTime)}
+                <div>
+                    {_updated_at} {$editTime}
+                </div>
+            {/if}
+            
+            {if !is_null($createTime)}
+                <div>
+                    {_created} {$createTime}
+                </div>
+            {/if}
+
+            <div style="display: flex;gap: 5px;margin-top: 2px;">
+                <a href="/photos/upload?album={$album->getPrettyId()}">{_upload_photo}</a>
+                <a href="/album{$album->getPrettyId()}/edit">{_edit_album}</a>
+            </div>
+
+        </div>
+
+    {/if}
+
+        </div>
+    {/if}
+    
+    
+</div> -->
+
+    {if $album->getPhotosCount() > 0}
+        <div class="container_gray scroll_container album-flex" style="margin-top: -10px;">
+            {foreach $photos as $photo}
+                {php if($photo->isDeleted()) continue; }
+                <div class="album-photo scroll_node">
+                    <a
+                    n:if="!is_null($thisUser) && $album->canBeModifiedBy($thisUser)"
+                    href="/album{$album->getPrettyId()}/remove_photo/{$photo->getId()}" class="album-photo--delete">
+                        &times;
+                    </a>
+                    
+                    <a href="/photo{$photo->getPrettyId()}?from=album{$album->getId()}">
+                        <img class="album-photo--image" src="{$photo->getURLBySizeId('tinier')}" alt="{$photo->getDescription()}"  loading=lazy />
+                    </a>
+                </div>
+            {/foreach}
+        </div>
+        {include "../components/paginator.latte", conf => $paginatorConf}
+    {else}
+        {include "../components/nothing.latte"}
+    {/if}
+{/block}

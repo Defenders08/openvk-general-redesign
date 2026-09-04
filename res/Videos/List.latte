@@ -1,0 +1,68 @@
+{extends "../@listView.latte"}
+{var $iterator = $videos}
+{var $count    = $paginatorConf->count}
+{var $page     = $paginatorConf->page}
+
+{block title}{_videos} {$user->getCanonicalName()}{/block}
+
+{block header}
+    {if !is_null($thisUser) && $user->getId() === $thisUser->getId()} 
+        {* Если пользователь смотрит свои видеозаписи *}
+        {_my_videos} » {tr("videos", $count)}
+    {else}
+        {* Если пользователь смотрит чужие видеозаписи *}
+        <a href="{$user->getURL()}">{$user->getCanonicalName()}</a> » {tr("videos", $count)}
+    {/if}
+
+    <div style="float: right;">
+        <span><b>
+            <a href="/videos/upload">{_upload_video}</a>
+        </b></span>
+    </div>
+{/block}
+
+{block size}
+    {if !is_null($thisUser) && $user->getId() === $thisUser->getId()}
+        <div id="videos_graybar" class="container_gray">
+            <form action="/search" id="search_box" method="GET">
+                <input name="section" type="hidden" value="videos">
+                <input name="q" class="header_search_input" value="" style="width: 579px" placeholder="{_search_for_videos}">
+            </form>
+        </div>
+    {/if}
+{/block}
+
+
+{block actions}
+    
+{/block}
+
+{* BEGIN ELEMENTS DESCRIPTION *}
+
+{block link|strip|stripHtml}
+    /video{$x->getPrettyId()}
+{/block}
+
+{block preview}
+    <div class="video-preview" id="videoOpen" data-id="{$x->getPrettyId()}">
+        <img src="{$x->getThumbnailURL()}"
+            alt="{$x->getName()}"
+            style="max-width: 170px; max-height: 127px; margin: auto;" />
+    </div>
+{/block}
+
+{block name}
+    <span id="videoOpen" data-id="{$x->getPrettyId()}" style="color:unset;">{$x->getName()}</span>
+{/block}
+
+{block description}
+    <p>
+        <span>{$x->getDescription() ?? ""}</span>
+    </p>
+    <span style="color: grey;">{_video_uploaded} {$x->getPublicationTime()}</span><br/>
+    <span style="color: grey;">{_video_updated} {$x->getEditTime() ?? $x->getPublicationTime()}</span>
+    <p>
+        <a href="/video{$x->getPrettyId()}" data-id="{$x->getPrettyId()}">{_view_video}</a>
+        {if $x->getCommentsCount() > 0}| <a href="/video{$x->getPrettyId()}#comments">{_comments} ({$x->getCommentsCount()})</a>{/if}
+    </p>
+{/block}

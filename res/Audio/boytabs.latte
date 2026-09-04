@@ -1,0 +1,56 @@
+<div class="tabs">
+    {var $isMyPage = isset($isMy) ? $isMy : false}
+    {var $currentMode = isset($mode) ? $mode : 'playlists'}
+    {var $owner = isset($ownerId) ? $ownerId : 0}
+
+    {if $isMyPage}
+        <!-- ================= ТОЛЬКО ДЛЯ СВОЕГО ПРОФИЛЯ ================= -->
+        
+        <!-- Моя музыка -->
+        <div n:if="isset($thisUser)" n:attr="id => $currentMode === 'list' ? 'activetabs' : false" class="tab">
+            <a n:attr="id => $currentMode === 'list' ? 'act_tab_a' : false" href="/audios{$thisUser->getId()}">
+                {_my_music}
+            </a>
+        </div>
+
+        <!-- Мои плейлисты -->
+        <div n:if="isset($thisUser)" n:attr="id => $currentMode === 'playlists' ? 'activetabs' : false" class="tab">
+            <a n:attr="id => $currentMode === 'playlists' ? 'act_tab_a' : false" href="/playlists{$thisUser->getId()}">
+                {_my_playlists}
+            </a>
+        </div>
+        
+        <!-- Новинки -->
+        <div n:if="isset($thisUser)" n:attr="id => $currentMode === 'new' ? 'activetabs' : false" class="tab">
+            <a n:attr="id => $currentMode === 'new' ? 'act_tab_a' : false" href="/search?section=audios">
+                {_audio_new}
+            </a>
+        </div>
+
+        <!-- Популярное -->
+        <div n:if="isset($thisUser)" n:attr="id => $currentMode === 'popular' ? 'activetabs' : false" class="tab">
+            <a n:attr="id => $currentMode === 'popular' ? 'act_tab_a' : false" href="/search?section=audios&order=listens">
+                {_audio_popular}
+            </a>
+        </div>
+
+    {else}
+        <!-- ================= ТОЛЬКО ДЛЯ ГРУППЫ ИЛИ ЧУЖОГО ЮЗЕРА ================= -->
+        
+        <!-- Музыка пользователя/сообщества -->
+        <div n:if="$owner != 0" n:attr="id => $currentMode === 'list' ? 'activetabs' : false" class="tab">
+            <a n:attr="id => $currentMode === 'list' ? 'act_tab_a' : false" href="/audios{$owner}">
+                {if $owner > 0}{_music_user}{else}{_music_club}{/if}
+            </a>
+        </div>
+
+
+        <!-- Плейлисты пользователя/сообщества -->
+        <div n:if="isset($thisUser) && $owner != 0" n:attr="id => $currentMode === 'playlists' ? 'activetabs' : false" class="tab">
+            <a n:attr="id => $currentMode === 'playlists' ? 'act_tab_a' : false" class="noOverflow" href="/playlists{$owner}">
+                {if $owner > 0}{_playlists_user}{else}{_playlists_club}{/if}
+            </a>
+        </div>
+
+    {/if}
+</div>

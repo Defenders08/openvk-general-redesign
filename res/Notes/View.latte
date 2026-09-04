@@ -1,0 +1,99 @@
+{extends "../@layout.latte"}
+
+{block title}{$note->getName()}{/block}
+
+{block headIncludes}
+    {var $notePreview = $note->getPreview(200)}
+    <meta property="og:title" content="{$note->getName()} — {$instance_name}" />
+    <meta property="og:url" content="{$baseUrl}/note{$note->getPrettyId()}" />
+    <meta property="og:type" content="article" />
+    <meta n:if="!empty($notePreview)" property="og:description" content="{$notePreview}" />
+    <meta name="twitter:title" content="{$note->getName()} — {$instance_name}" />
+    <meta n:if="!empty($notePreview)" name="twitter:description" content="{$notePreview}" />
+{/block}
+
+{block header}
+    {var $author = $owner ?? $note->getOwner()}
+    {if !is_null($thisUser) && $author->getId() === $thisUser->getId()}
+        {* Если пользователь смотрит свою заметку *}
+        <a href="/notes{$thisUser->getId()}">{_my_notes}</a> » {$note->getName()}
+    {else}
+        {* Если пользователь смотрит чужую заметку *}
+        <a href="/notes{$author->getId()}">Заметки {$author->getCanonicalName()}</a> » {$note->getName()}
+    {/if}
+{/block}
+
+
+{block content}
+    {var $author = $note->getOwner()}
+    <style>
+        #userContent img {
+            max-width: 245pt;
+            max-height: 200pt;
+        }
+
+        #userContent blockquote {
+            background-color: #f3f3f3;
+            border-bottom: 5px solid #969696;
+            padding: 1;
+        }
+
+        #userContent cite {
+            margin-top: 1em;
+            display: block;
+        }
+
+        #userContent cite::before {
+            content: "— ";
+        }
+
+        #userContent .underline {
+            text-decoration: underline;
+        }
+    </style>
+
+    <div class="container_gray" style="margin-top: -10px; border-bottom: #DEDEDE solid 1px;">
+
+    <article id="userContent" class="note-boy">
+        <div class="note_header">
+            <div class="note_title">
+                <div class="note_title">
+                    <a>{$note->getName()}</a>
+                </div>
+            </div>
+            <div class="byline">
+                <span><a href="{$author->getURL()}">{$author->getCanonicalName()}</a></span> {$note->getPublicationTime()}
+                <span n:if="$note->getEditTime() > $note->getPublicationTime()" style="color: grey;">({_edited} {$note->getEditTime()})</span>
+            </div>
+        </div>
+        <div style="padding: 10px;">
+            {$note->getText()|noescape}
+        </div>
+    </article>
+
+    </div>
+
+    <div class="note_footer" style="border: none;">
+        <div class="comments_count" style="padding-top: 10px;padding-bottom: 10px;">
+            {if sizeof($comments) > 0}
+                {_comments} ({$note->getCommentsCount()})
+            {else}
+                {_no_comments}
+            {/if}
+            <span n:if="isset($thisUser) && $thisUser->getId() === $note->getOwner()->getId()">&nbsp;|&nbsp;
+                <a id="_noteDelete" href="/note{$note->getOwner()->getId()}_{$note->getId()}/delete">{_delete}</a>
+                &nbsp;|&nbsp;
+                <a href="/note{$note->getOwner()->getId()}_{$note->getVirtualId()}/edit" rel='nofollow'>{_edit}</a>
+            </span>
+        </div>
+    </div>
+    <div style="margin: 0;">
+        {include "../components/comments.latte",
+            comments => $comments,
+            count => $cCount,
+            page => $cPage,
+            model => "notes",
+            parent => $note,
+            showTitle => false}
+    </div>
+{/block}
