@@ -1,6 +1,8 @@
 id: openvk_general_redesign
 version: "0.0.1.0"
 openvk_version: 0
+inherit_master: false
+override_templates: true
 enabled: 1
 metadata:
     name:
