@@ -12,3 +12,8 @@ metadata:
         uk: "OpenVK General Redesign"
     author: "defenders08"
     description: "OpenVK General Redesign"
+options:
+  vk_style:
+    type: checkbox
+    title: "Использовать стиль ВКонтакте"
+    default: false

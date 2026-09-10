@@ -48,6 +48,11 @@
         {ifset headIncludes}
             {include headIncludes}
         {/ifset}
+        {* Проверяем, включил ли пользователь галочку в настройках темы *}
+{if $theme_options.vk_style}
+    <link rel="stylesheet" href="res/vk-style.css">
+{/if}
+
     </head>
     <body {if isset($thisUser)}data-themepack="{$thisUser->getStyle()}"{/if}>
         {include "components/globalalert.latte"}

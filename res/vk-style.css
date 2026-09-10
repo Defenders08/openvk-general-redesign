@@ -1,0 +1,121 @@
+.page_header {
+    background: url(https://openvk.org/themepack/vk2007/0.0.1.0/resource/1.gif);
+}
+.header_navigation .link {
+    background: url(https://openvk.org/themepack/vk2007/0.0.1.0/resource/2.png) no-repeat;
+}
+
+.header_navigation .link a {
+    color: #dae1e8;
+}
+
+.content_title_expanded {
+    border-top: #45688e solid 1px;
+    background-color: #dae2e8;
+    color: #45688e
+}
+
+.navigation .link {
+    color: #2b587a
+}
+
+.navigation .link:hover {
+    background: #dae1e8;
+    border-top: 1px solid #cad1d9
+}
+
+.tabs {
+    border-bottom: 1px solid #36638e
+}
+
+#activetabs {
+    background: #36638e
+}
+
+.button {
+    border: #2b587a;
+    background: #2b587a;
+    color: #fff;
+    text-shadow: 0 1px 0 #2b587a;
+}
+
+.navigation_footer .link:hover {
+    border-top: 1px solid #cad1d9;
+    color: #2b587a;
+    background: #dae1e8
+}
+
+.navigation_footer .link {
+    color: #2b587a
+}
+
+.button:hover {
+    color: #dae1e8;
+}
+
+#activetabs a:hover {
+    color: #dae1e8;
+}
+
+.tabs a:hover {
+    color: #346991;
+}
+
+#act_tab_a:hover {
+    color: #346991;
+}
+
+.content_title_expanded {
+    background-image: url(https://openvk.org/themepack/vk2007/0.0.1.0/resource/4.gif)!important;
+}
+
+.completeness-gauge-gold {
+    background-color: #f6ebbb;
+    border-top: 1px solid #b9b597
+}
+
+.completeness-gauge-gold>div {
+    background-color: #e1d7a2
+}
+.ovk-diag-cont {
+    background-color: rgba(199,189,189,.5803921569)
+}
+.ovk-diag {
+    background-color: #fff;
+    border: 1px solid #45688e
+}
+.ovk-diag-head {
+    background-color: #45688e;
+    border-bottom: 1px solid #3e3e3e;
+    color: #fff;
+}
+.ovk-diag-action {
+    background-color: #d4d4d4;
+}
+.mb_tab#active {
+    background-color: #36638e;
+}
+.audioEntry .playerButton .playIcon {
+    background-image: url(https://openvk.org/photos/thumbnails/478753_original.jpeg);
+}
+.audioEmbed .track > .selectableTrack, .bigPlayer .selectableTrack {
+    border-top: #36638e 1px solid;
+}
+.bigPlayer .slider, .audioEmbed .track .slider {
+    background: #36638e;
+}
+.audioEntry .performer a {
+    color: #09467f;
+}
+.bigPlayer .trackInfo a {
+    color: #09467f;
+}
+.audioEntry.nowPlaying .performer a, .audioEntry.nowPlaying .performer {
+    color: #09467f !important;
+}
+.section_empty a::before {
+    background-image: url(https://i.ibb.co/pCWhMXY/group-icons-1.png);
+}
+.header_navigation #search_box #searchBoxFastTips a b, .header_navigation #search_box #searchBoxFastTips a span {
+    color: #09467f;
+}
