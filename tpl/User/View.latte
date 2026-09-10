@@ -191,7 +191,7 @@
             </div>
 
             {if isset($thisUser) && $user->getId() === $thisUser->getId() && sizeof($completeness->unfilled) > 0}
-                <br/>
+            <div style="display: flex; flex-direction: column; gap: 5px; padding-top: 10px; padding-bottom: 5px;">
                 <a n:if="in_array('interests', $completeness->unfilled)" href="/edit?act=interests">
                     <img src="/assets/packages/static/openvk/img/icon1.gif" />
                     {_interests} (+20%)
@@ -212,9 +212,9 @@
                     <img src="/assets/packages/static/openvk/img/icon3.gif" />
                     {_status} (+15%)
                 </a>
+            </div>
             {/if}
         </div>
-        <br />
         <div class="fictional_profile_section" n:if="$user->getFriendsCount() > 0 && $user->getPrivacyPermission('friends.read', $thisUser ?? NULL)">
             {var $friendCount = $user->getFriendsCount()}
 
@@ -283,11 +283,11 @@
                     </div>
                 </div>
                 <div class="hide_on_mobiles" style="display: flex;flex-direction: column;padding-top: 10px;padding-right: 10px;padding-bottom: 5px;">
-                    <div class="ovk-album" style="background: url({is_null($album->getCoverPhoto()) ? '/assets/packages/static/openvk/img/camera_200.png' : $album->getCoverPhoto()->getURLBySizeId('medium')});background-size: cover;" n:foreach="array_slice($albums, 0, 2) as $album">
+                    <a href="/album{$album->getPrettyId()}" class="ovk-album" style="background: url({is_null($album->getCoverPhoto()) ? '/assets/packages/static/openvk/img/camera_200.png' : $album->getCoverPhoto()->getURLBySizeId('medium')});background-size: cover; display: flex;" n:foreach="array_slice($albums, 0, 2) as $album">
                         <div class="album-name-boykisser">
-                            <b><a href="/album{$album->getPrettyId()}">{$album->getName()}</a></b>
+                            <b>{$album->getName()}<span class="photo-icon">{$albumsCount}</span><span class="photo-data-update">{tr("updated_at", $album->getEditTime() ?? $album->getPublicationTime())}</span></b>
                         </div>
-                    </div>
+                    </a>
                 </div>
             </div>
         </div>
@@ -329,7 +329,7 @@
                     </div>
                 </div>
 
-				<div class="hide_on_mobiles" style="padding: 5px 8px 15px 8px;">
+				<div class="hide_on_mobiles" style="padding-left: 5px; padding-top: 10px;">
                     <ul class="notes_titles" n:foreach="$notes as $note">
 						<li class="written">
 							<a href="/note{$note->getPrettyId()}">
@@ -359,7 +359,13 @@
                 </div>
                 <div class="hide_on_mobiles" style="padding-left: 5px;">
                     <div style="display: inline;" n:foreach="$user->getClubs(1) as $club">
-                        <a href="club{$club->getId()}">{$club->getName()}</a> {if !$iterator->last}•{/if}
+                        <a href="club{$club->getId()}" class="groups-mini-list">
+                            <img src="{$club->getAvatarUrl()}">
+                            <div style="display: flex; flex-direction: column; margin-left: 7px;">
+                                <div>{$club->getName()}</div>
+                                <div style="font-size: 10px;color: gray;">{tr("followers", $club->getFollowersCount())}</div>
+                            </div>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -378,9 +384,18 @@
                     </div>
                 </div>
                 <div style="padding-left: 5px;">
-                    <div style="display: inline;" n:foreach="$user->getEvents(1) as $meeting">
-                        <a href="/event{$meeting->getId()}">{$meeting->getName()}</a> {if !$iterator->last}•{/if}
-                    </div>
+
+                    <a href="/event{$meeting->getId()}" class="groups-mini-list" n:foreach="$user->getEvents(1) as $meeting">
+                        <img src="{$meeting->getAvatarUrl()}">
+                        <div style="display: flex; flex-direction: column; margin-left: 7px;">
+                            <div>{$meeting->getName()}</div>
+                            <div style="font-size: 10px; color: gray;">
+                                {tr("followers", $meeting->getFollowersCount())}
+                            </div>
+                        </div>
+                    </a>
+
+
                 </div>
             </div>
         </div>
@@ -621,8 +636,10 @@
                     </div>
                 </div>
                 <div class="hide_on_mobiles content_list long">
-                    <div class="audio" n:foreach="$audios as $audio" style="width: 100%;">
-                        {include "../Audio/player.latte", audio => $audio}
+                    <div style="margin-top: 5px; width: 100%;">
+                        <div class="audio" n:foreach="$audios as $audio" style="width: 100%;">
+                            {include "../Audio/player.latte", audio => $audio}
+                        </div>
                     </div>
                 </div>
             </div>

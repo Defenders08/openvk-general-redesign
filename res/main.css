@@ -1228,23 +1228,57 @@ table.User {
     text-align: center;
     width: 100%;
     height: 120px;
+    color: #fff;
 }
 
 .album-name-boykisser {
-    padding: 10px;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 6px;
+    padding-bottom: 4px;
     background: #0000004d;
-    width: 170px;
+    width: 180px;
     text-align: left;
-    margin-top: 87px;
+    margin-top: auto;
 }
 .album-name-boykisser a {
     color: #fff;
+}
+.photo-icon {
+    font-weight: bold;
+    color: #fff;
+    float: right;
+    background: url(camera_white.png) no-repeat;
+    padding-left: 16px;
+    background-position-y: 2px;
+}
+.album-name-boykisser:hover .photo-data-update {
+    display: block;
+}
+.photo-data-update {
+    display: none;
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 10px;
+    margin-top: 1px;
 }
 
 .ovk-album:not(:first-child),
 .ovk-note:not(:first-child) {
     display: inline-block;
     margin-top: 10px;
+}
+
+.groups-mini-list {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+.groups-mini-list img {
+    width: 32px;
+}
+.groups-mini-list span {
+
 }
 
 .msg {

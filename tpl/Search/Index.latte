@@ -9,6 +9,11 @@
 
 {block header}
     {tr("search_for_$section")} » {tr("results", $count)} {tr("showing_x_y", $page, $count)}
+    <div style="float: right;">
+        <span><b>
+            <a href="fave" rel='nofollow'>{_faves}</a>
+        </b></span>
+    </div>
 {/block}
 
 {block wrap}
@@ -28,7 +33,7 @@
         <div class="wrap1">
             <div class="page_wrap">
 
-                <div class="tabs stupid-fix">
+            <div class="tabs stupid-fix">
                 <div n:attr="id => $section === 'users' ? 'activetabs' : false" class="tab">
                     <a n:attr="id => $section === 'users' ? 'act_tab_a' : false" href="/search?section=users&q={urlencode($query)}">
                         {_s_people}
