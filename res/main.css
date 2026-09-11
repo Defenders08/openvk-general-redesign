@@ -1943,12 +1943,12 @@ body.scrolled .toTop:hover, .toTop.has_down:hover {
 }
 
 #basicInfo {
-    padding: 5px 0 15px 8px;
+    padding: 5px 0 0px 5px
 }
 
 .accountInfo {
     padding: 0;
-    margin: 0 0 0 8px;
+    margin: 0 0 0 5px;
     border-bottom: solid 1px #DAE1E8;
     display: block;
 }
@@ -2253,6 +2253,20 @@ h4.gift_cat_header {
     color: #58462a;
 }
 
+.right-group-orgy img {
+    padding: 10px;
+    width: 140px;
+    background: #fff;
+    border: #DEDEDE solid 1px;
+}
+.right-group-orgy {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: stretch;
+    align-items: center;
+    margin-top: 15px;
+}
 .avatar-list {
     padding: 4px 8px;
 }

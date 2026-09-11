@@ -37,11 +37,11 @@
 <div class="left_big_block">
     <div n:if="!is_null($alert = $club->getAlert())" class="group-alert">{strpos($alert, "@") === 0 ? tr(substr($alert, 1)) : $alert}</div>
 
-    <div class="content_title_expanded hide_on_mobiles_name" onclick="hidePanel(this);">
-        {_information}
+    <div class="profileName" style="padding-left: 2px; padding-bottom: 5px; border-bottom: solid 1px #DAE1E8;">
+        <h2>{$club->getName()}</h2>
     </div>
 
-    <div class="page_info page_info_main">
+    <div class="page_info page_info_main" style="padding-top: 3px;">
         <table class="ugc-table">
             <tbody>
                 <tr>
@@ -280,7 +280,7 @@
                 {_group_type}
             {/if}
         </div>
-        <div style="padding:4px">
+        <div style="padding:4px; padding-top: 8px !important;">
             {if $club->isEvent() && !$club->isClosed()}
                 {_event_type_open}
             {elseif $club->isEvent() && $club->isClosed()}
@@ -300,10 +300,10 @@
                 {_creator}
             {/if}
         </div>
-        <div class="avatar-list-item" style="padding: 8px;">
+        <div class="avatar-list-item" style="padding: 8px;padding-bottom: 0px;padding-top: 10px;">
             {var $author = $club->getOwner()}
             <div class="avatar">
-                <a href="{$author->getURL()}">
+                <a href="{$author->getURL()}" style="display: flex;">
                     <img class="ava" src="{$author->getAvatarUrl()}" />
                 </a>
             </div>
