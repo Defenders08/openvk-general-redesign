@@ -42,18 +42,22 @@
     <img n:if="$user->isVerified()"
          class="name-checkmark"
          src="/assets/packages/static/openvk/img/checkmark.png"
-         />
+         style="display: inline-block;
+    vertical-align: middle;
+    margin-top: -4px;"/>
     <span n:if="isset($thisUser) && $user->getId() == $thisUser->getId()"><b>({_this_is_you})</b></span>
 
     <!-- DEBUG: ONLINE REPORT: static {$user->getOnline()->timestamp()}s adjusted {$user->getOnline()->timestamp() + 2505600}s real {time()}s -->
     <div n:if="$user->getOnline()->timestamp() + 2505600 > time()" style="float:right;">
+        {var $platform = $user->getOnlinePlatform()}
+        {var $platformDetails = $user->getOnlinePlatformDetails()}
+
         {if $user->isOnline()}
-            <span><b>{_online}</b></span>
+            <span n:class="(!empty($platform) && $platform !== 'web') ? yellow-mobile"><b>{_online}</b></span>
         {else}
             <span>{$user->isFemale() ? tr("was_online_f") : tr("was_online_m")} {$user->getOnline()}</span>
         {/if}
-        {var $platform = $user->getOnlinePlatform()}
-        {var $platformDetails = $user->getOnlinePlatformDetails()}
+
         <a n:if="!empty($platform)" class="client_app client_app_titlebar" data-app-tag="{$platform}" data-app-name="{$platformDetails['name']}" data-app-url="{$platformDetails['url']}" data-app-img="{$platformDetails['img']}">
             <img src="/assets/packages/static/openvk/img/app_icons_mini/{$user->getOnlinePlatform(true)}.svg">
         </a>

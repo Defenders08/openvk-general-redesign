@@ -362,6 +362,12 @@ h1 {
     overflow: hidden;
     color: #696029;
 }
+.yellow-mobile {
+    background: url(yellow_mobile.png) no-repeat;
+    background-position: right;
+    padding-right: 14px !important;
+    background-position-y: 1px;
+}
 
 #wrapHI {
     border-right: solid 1px #D5DDE6;
@@ -1241,9 +1247,11 @@ table.User {
     text-align: left;
     margin-top: auto;
 }
+
 .album-name-boykisser a {
     color: #fff;
 }
+
 .photo-icon {
     font-weight: bold;
     color: #fff;
@@ -1252,14 +1260,28 @@ table.User {
     padding-left: 16px;
     background-position-y: 2px;
 }
-.album-name-boykisser:hover .photo-data-update {
-    display: block;
-}
+
+/* Исходное состояние: элемент прозрачен и сжат по высоте */
 .photo-data-update {
-    display: none;
+    display: block; /* Держим в потоке, чтобы работала анимация */
+    opacity: 0;
+    visibility: hidden;
+    max-height: 0;
+    overflow: hidden;
     color: #ffffff;
     font-weight: bold;
     font-size: 10px;
+    margin-top: 0;
+    
+    /* Плавный переход прозрачности и высоты за 0.2 секунды */
+    transition: opacity 0.2s ease, max-height 0.2s ease, margin-top 0.2s ease, visibility 0.2s ease;
+}
+
+/* Состояние при наведении на плашку альбома */
+.album-name-boykisser:hover .photo-data-update {
+    opacity: 1;
+    visibility: visible;
+    max-height: 20px; /* Запас по высоте под строку с датой */
     margin-top: 1px;
 }
 
@@ -1841,6 +1863,8 @@ body.scrolled .toTop:hover, .toTop.has_down:hover {
     margin-left: 2px;
     margin-bottom: -1px;
 }
+
+
 
 .post-opts {
     margin-top: 10px;

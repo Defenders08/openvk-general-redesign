@@ -33,7 +33,80 @@
             <td class="post-all-contents" width="100%" valign="top">
                 <div class="post-author">
                     <a href="{$author->getURL()}"><b class="post-author-name">{$author->getCanonicalName()}</b></a>
-                    <img n:if="$author->isVerified()" class="name-checkmark" src="/assets/packages/static/openvk/img/checkmark.png">
+                    <span n:if="$author->isVerified()" 
+                        class="page_verified" 
+                        data-title="{_verified_page}">
+                <img class="name-checkmark" src="/assets/packages/static/openvk/img/profile_boykisser.png" style="position: relative;top: 1px;" />
+        </span><style>/* Контейнер галочки */
+/* Базовый контейнер галочки */
+.page_verified {
+    position: relative !important;
+    display: inline-block !important;
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+/* Общие настройки для плавного появления псевдоэлементов */
+.page_verified::before,
+.page_verified::after {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    pointer-events: none;
+    z-index: 10000;
+    
+    /* Изначально скрыты */
+    opacity: 0;
+    visibility: hidden;
+    
+    /* НАСТРОЙКИ АНИМАЦИИ: 0.15 секунды, плавно */
+    transition: opacity 0.15s ease-in-out, visibility 0.15s ease-in-out;
+}
+
+/* Стилизация прямоугольника ПОПАПА */
+.page_verified::before {
+    content: attr(data-title);
+    bottom: 100%;
+    margin-bottom: 7px;
+    background: #ffffff;
+    color: #2b587a;
+    font-size: 11px;
+    font-family: Tahoma, Arial, sans-serif;
+    line-height: 14px;
+    white-space: nowrap;
+    padding: 6px 9px 7px 9px;
+    border: 1px solid #c0c6ca;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+    border-radius: 2px;
+}
+
+/* Стилизация СТРЕЛОЧКИ */
+.page_verified::after {
+    content: "";
+    bottom: 100%;
+    margin-bottom: 2px;
+    border-width: 5px 5px 0 5px;
+    border-style: solid;
+    border-color: #ffffff transparent transparent transparent;
+    filter: drop-shadow(0 1px 0 #c0c6ca);
+}
+
+/* --- СОСТОЯНИЕ ПРИ НАВЕДЕНИИ (Плавное появление) --- */
+.page_verified:hover::before,
+.page_verified:hover::after {
+    opacity: 1;
+    visibility: visible;
+    margin-left: 0px;
+}
+/* Разрешаем элементам заголовка поста выходить за пределы */
+.post,
+.post-contents,
+.post-all-contents,
+.post-author {
+    overflow: visible !important;
+}
+</style>
+
                     {$post->isDeactivationMessage() && !$post->isPostedOnBehalfOfGroup() ? ($author->isFemale() ? tr($deac . "_f") : ($author->isNeutral() ? tr($deac . "_g") : tr($deac . "_m")))}
                     {$post->isDeactivationMessage() && $post->isPostedOnBehalfOfGroup() ? tr($deac . "_g") : ""}
                     {$post->isUpdateAvatarMessage() && !$post->isPostedOnBehalfOfGroup() ? ($author->isFemale() ? tr("upd_f") : ($author->isNeutral() ? tr("upd_n") : tr("upd_m")))}
